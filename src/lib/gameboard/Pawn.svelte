@@ -18,7 +18,8 @@
     class:pawn_rotation_to_black={rotation && value === 2}
     class:pawn_white={color === 1}
     class:pawn_black={color === 2}
-    transition:fade="{{duration: 100}}"/>
+    transition:fade|local="{{duration: 100}}"
+    />
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STYLE -->
 

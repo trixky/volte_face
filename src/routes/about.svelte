@@ -1,10 +1,6 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
     import Header from "../lib/header/Header.svelte";
-    import Board from "../lib/gameboard/Board.svelte";
-
-    let turn = 1;
-    $: turn_color = turn === 1 ? "white" : "black";
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -12,8 +8,22 @@
     <Header />
 </header>
 <main class="center">
-    <p>turn: &nbsp;&nbsp; player {turn} &nbsp;&nbsp; ({turn_color})</p>
-    <Board bind:turn />
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
+    <p>ABOUT</p>
 </main>
 <footer class="center">
     <p>ceci est le footer</p>

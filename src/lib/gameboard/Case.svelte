@@ -43,6 +43,7 @@
         height: 50px;
         background-color: rgb(150, 247, 250);
 
+
         -webkit-user-select: none; /* Safari */        
         -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* IE10+/Edge */
@@ -50,26 +51,18 @@
     }
     
     .board-case-border-top {
-        border-top: solid;
-        border-top-width: 3;
-        border-top-color: rgb(0, 140, 233);
+        border-top: 2.5px solid rgb(0, 140, 233);
     }
     
     .board-case-border-right {
-        border-right: solid;
-        border-right-width: 3;
-        border-right-color: rgb(0, 140, 233);
+        border-right: 2.5px solid rgb(0, 140, 233);
     }
     
     .board-case-border-bottom {
-        border-bottom: solid;
-        border-bottom-width: 3;
-        border-bottom-color: rgb(0, 140, 233);
+        border-bottom: 2.5px solid rgb(0, 140, 233);
     }
     
     .board-case-border-left {
-        border-left: solid;
-        border-left-width: 3;
-        border-left-color: rgb(0, 140, 233);
+        border-left: 2.5px solid rgb(0, 140, 233);
     }
 </style>
