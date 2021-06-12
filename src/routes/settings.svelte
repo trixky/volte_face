@@ -1,9 +1,6 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
     import Header from "../lib/header/Header.svelte";
-
-    console.log(window.location.pathname)
-
 </script>
 
 <!-- ************************************** CONTENT -->
