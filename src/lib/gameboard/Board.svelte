@@ -1,30 +1,36 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
+    import { onDestroy } from "svelte";
     import Case from "./Case.svelte";
     import { next_board } from "../../logic/next_board";
+    import { store_game } from "../../stores/store.game";
 
-    export let turn = 1;
-
-    let pawns = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 1, 0, 0, 0],
-        [0, 0, 0, 1, 2, 0, 0, 0],
-        [0, 0, 0, 1, 2, 0, 0, 0],
-        [0, 0, 0, 2, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-    ];
+    let local_store_game;
+    let new_pawns;
+    let new_turn;
 
     function test(x, y) {
-        [pawns, turn] = next_board(pawns, turn, x, y);
+        [new_pawns, new_turn] = next_board(
+            local_store_game.pawns,
+            local_store_game.turn,
+            x,
+            y
+        );
+        store_game.update((n) => ({ ...n, pawns: new_pawns }));
+        store_game.update((n) => ({ ...n, turn: new_turn }));
     }
+
+    const unsubscribe_store_game = store_game.subscribe((value) => {
+        local_store_game = value;
+    });
+
+    onDestroy(unsubscribe_store_game);
 </script>
 
 <!-- ************************************** CONTENT -->
 
 <div id="board">
-    {#each pawns as line, y}
+    {#each local_store_game.pawns as line, y}
         <div class="board-line">
             {#each line as position, x}
                 <Case
@@ -42,7 +48,7 @@
     #board {
         display: inline-block;
         margin: 15px auto;
-        
+
         border: solid;
         border-width: 10px;
         border-color: rgb(150, 247, 250);
