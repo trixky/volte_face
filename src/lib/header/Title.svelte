@@ -57,7 +57,7 @@
         color: black;
         background-color: white;
         display: inline-block;
-        border: 3px solid black;
+        border: 4px solid black;
     }
 
     #title-container.returned {
