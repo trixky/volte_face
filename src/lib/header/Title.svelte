@@ -1,36 +1,52 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script context="module">
-    let title_returned = false;
+    let module_title_returned = false;
+    let module_title_never_clicked = true;
+    let module_title_never_shaked = true;
 </script>
 
 <script>
-    let title_never_clicked = false;
+    let title_never_clicked = true;
     let block_animation = false;
-    let local_title_return = title_returned;
-    let local_title_return_wait_block_animation = local_title_return
-    $: title_returned = local_title_return
+    let title_shaking = false;
+    let title_returned = module_title_returned;
+    let title_returned_wait_block_animation = title_returned;
+    $: module_title_returned = title_returned;
 
     function titleRotationHandler() {
-        title_never_clicked = true;
-        local_title_return = !local_title_return
-        block_animation = true
-        setTimeout(_ => {
-                block_animation = false
-                setTimeout(_ => {
-                    local_title_return_wait_block_animation = local_title_return;
-
-                }, 100)
-        }, null)
+        title_never_clicked = false;
+        module_title_never_clicked = false;
+        title_returned = !title_returned;
+        block_animation = true;
+        setTimeout((_) => {
+            block_animation = false;
+            setTimeout((_) => {
+                title_returned_wait_block_animation = title_returned;
+            }, 100);
+        }, null);
     }
+
+    setTimeout((_) => {
+        if (module_title_never_shaked) {
+            title_shaking = true;
+            module_title_never_shaked = false;
+        };
+    }, 5000 + Math.random() * 10000);
 </script>
 
 <!-- ************************************** CONTENT -->
 <div
     id="title-container"
-    class:returned={local_title_return_wait_block_animation}
-    class:animation-to-returned={local_title_return && !block_animation && title_never_clicked}
-    class:animation-to-not-returned={!local_title_return && !block_animation && title_never_clicked}
-    on:click={titleRotationHandler}>
+    class:animation-shaking={title_shaking}
+    class:returned={title_returned_wait_block_animation}
+    class:animation-to-returned={title_returned &&
+        !block_animation &&
+        !title_never_clicked}
+    class:animation-to-not-returned={!title_returned &&
+        !block_animation &&
+        !title_never_clicked}
+    on:click={titleRotationHandler}
+>
     <h1>Volte Face</h1>
 </div>
 
@@ -47,6 +63,10 @@
     #title-container.returned {
         color: white;
         background-color: black;
+    }
+
+    #title-container.animation-shaking {
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     }
 
     #title-container.animation-to-not-returned {
@@ -68,24 +88,47 @@
         user-select: none; /* Standard */
     }
 
+    @keyframes shake {
+        10%,
+        90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+
+        20%,
+        80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%,
+        50%,
+        70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40%,
+        60% {
+            transform: translate3d(4px, 0, 0);
+        }
+    }
+
     @keyframes rotation {
         from {
             color: white;
-        background-color: black;
+            background-color: black;
             transform: matrix(1, 0, 0, 1, 0, 0);
         }
         49.9% {
             color: white;
-        background-color: black;
+            background-color: black;
         }
         50% {
             color: black;
-        background-color: white;
+            background-color: white;
             transform: matrix(1, 0, 0, 0.01, 0, 0);
         }
         to {
             color: black;
-        background-color: white;
+            background-color: white;
             transform: matrix(1, 0, 0, 1, 0, 0);
         }
     }
