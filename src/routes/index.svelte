@@ -2,6 +2,7 @@
 <script>
     import { quintOut } from "svelte/easing";
     import { crossfade } from "svelte/transition";
+    import { get_score } from "../logic/score"
 
     let po = false;
 
@@ -37,8 +38,7 @@
 
     onDestroy(unsubscribe_store_game);
 
-    $: console.log(local_store_game.turn)
-    $: console.log(local_store_game.turn === 1)
+    $: [first_player_score, second_player_score] = get_score(local_store_game.pawns)
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -51,22 +51,22 @@
         <div class="player-infos">
             {#if local_store_game.turn === 1}
                 <div
-                    in:receive={{ key: "todo.id" }}
-                    out:send={{ key: "todo.id" }}
+                    in:receive|local={{ key: "todo.id" }}
+                    out:send|local={{ key: "todo.id" }}
                 />
             {/if}
             <p>player &nbsp;1&nbsp; (white)</p>
-            <p>x pawns</p>
+            <p>{first_player_score} pawns</p>
         </div>
         <div class="player-infos">
             {#if local_store_game.turn === 2}
                 <div
-                    in:receive={{ key: "todo.id" }}
-                    out:send={{ key: "todo.id" }}
+                    in:receive|local={{ key: "todo.id" }}
+                    out:send|local={{ key: "todo.id" }}
                 />
             {/if}
             <p>player &nbsp;2&nbsp; (black)</p>
-            <p>x pawns</p>
+            <p>{second_player_score} pawns</p>
         </div>
     </div>
     <Board />

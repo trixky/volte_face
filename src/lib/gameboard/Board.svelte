@@ -9,15 +9,15 @@
     let new_pawns;
     let new_turn;
 
-    function test(x, y) {
+    function handleClickTrigger(x, y) {
         [new_pawns, new_turn] = next_board(
             local_store_game.pawns,
             local_store_game.turn,
             x,
             y
-        );
-        store_game.update((n) => ({ ...n, pawns: new_pawns }));
-        store_game.update((n) => ({ ...n, turn: new_turn }));
+            );
+            store_game.update((n) => ({ ...n, pawns: new_pawns }));
+            store_game.update((n) => ({ ...n, turn: new_turn }));
     }
 
     const unsubscribe_store_game = store_game.subscribe((value) => {
@@ -32,10 +32,10 @@
 <div id="board">
     {#each local_store_game.pawns as line, y}
         <div class="board-line">
-            {#each line as position, x}
+            {#each line as value, x}
                 <Case
-                    clickTrigger={(_) => test(x, y)}
-                    bind:value={position}
+                    {value}
+                    clickTrigger={(_) => handleClickTrigger(x, y)}
                     borders={[y != 0, x != 7, y != 7, x != 0]}
                 />
             {/each}
