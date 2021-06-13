@@ -39,6 +39,7 @@
     onDestroy(unsubscribe_store_game);
 
     $: [first_player_score, second_player_score] = get_score(local_store_game.pawns)
+    $: local_store_game.turn === 0 && console.log("c'eeeest morrrrt")
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -56,7 +57,7 @@
                 />
             {/if}
             <p>player &nbsp;1&nbsp; (white)</p>
-            <p>{first_player_score} pawns</p>
+            <p>{first_player_score} &nbsp;pawns</p>
         </div>
         <div class="player-infos">
             {#if local_store_game.turn === 2}
@@ -66,7 +67,7 @@
                 />
             {/if}
             <p>player &nbsp;2&nbsp; (black)</p>
-            <p>{second_player_score} pawns</p>
+            <p>{second_player_score} &nbsp;pawns</p>
         </div>
     </div>
     <Board />
