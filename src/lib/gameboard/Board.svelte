@@ -28,7 +28,6 @@
 </script>
 
 <!-- ************************************** CONTENT -->
-
 <div id="board">
     {#each local_store_game.pawns as line, y}
         <div class="board-line">

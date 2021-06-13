@@ -7,7 +7,7 @@
     let po = false;
 
     const [send, receive] = crossfade({
-        duration: (d) => Math.sqrt(d * 400),
+        duration: (d) => Math.sqrt(d * 1000),
 
         fallback(node, params) {
             const style = getComputedStyle(node);
@@ -72,7 +72,6 @@
     <Board />
 </main>
 <footer class="center">
-    <p class="nimp">test</p>
     <p>ceci est le footer</p>
 </footer>
 
