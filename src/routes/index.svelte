@@ -4,8 +4,6 @@
     import { crossfade } from "svelte/transition";
     import { get_score } from "../logic/score"
 
-    let po = false;
-
     const [send, receive] = crossfade({
         duration: (d) => Math.sqrt(d * 1000),
 

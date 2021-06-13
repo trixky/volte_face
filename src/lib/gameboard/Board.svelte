@@ -6,6 +6,7 @@
     import { next_board } from "../../logic/next_board";
     import { store_game } from "../../stores/store.game";
     import { bind } from "svelte/internal";
+    import { get_score } from "../../logic/score";
 
     let local_store_game;
     let new_pawns;
@@ -32,11 +33,33 @@
         local_store_game = value;
     });
 
+    $: [first_player_score, second_player_score] = get_score(
+        local_store_game.pawns
+    );
+    $: gamer_over_title =
+        first_player_score === second_player_score
+            ? `equality !<br/>${first_player_score} - ${second_player_score}`
+            : first_player_score > second_player_score
+            ? `player &nbsp;1&nbsp; (white)<br />win !<br /><br />${first_player_score} - ${second_player_score}`
+            : `player &nbsp;2&nbsp; (black)<br />win !<br /><br />${second_player_score} - ${first_player_score}`;
+
     onDestroy(unsubscribe_store_game);
 </script>
 
 <!-- ************************************** CONTENT -->
 <div id="board-container">
+    {#if !local_store_game.turn}
+        <h2
+            id="gamer-over-title"
+            class:gamer-over-title-white={first_player_score >
+                second_player_score}
+            class:gamer-over-title-black={first_player_score >
+                second_player_score}
+            transition:fade={{ duration: 500 }}
+        >
+            {@html gamer_over_title}
+        </h2>
+    {/if}
     <div id="board" class:board-disabled={!local_store_game.turn}>
         {#each local_store_game.pawns as line, y}
             <div class="board-line">
@@ -95,19 +118,37 @@
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STYLE -->
 <style>
+    #board-container {
+        position: relative;
+    }
+
     #board {
+        position: relative;
         display: inline-block;
-        margin: 15px auto;
+        margin: 15px 0;
 
         border: solid;
         border-width: 10px;
         border-color: rgb(150, 247, 250);
-        background-color: black;
-        transition: opacity .3s 0.4s;
+        transition: opacity 2s;
     }
 
     .board-disabled {
-        opacity: 0.4;
+        opacity: 0.05;
+    }
+
+    #gamer-over-title {
+        z-index: 10;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+    }
+
+    .gamer-over-title-white {
+        color: white;
+        font-size: 30px;
+        -webkit-text-stroke: 1px black;
     }
 
     .board-line {
