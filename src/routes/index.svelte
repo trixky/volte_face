@@ -70,9 +70,6 @@
     </div>
     <Board />
 </main>
-<footer class="center">
-    <p>ceci est le footer</p>
-</footer>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STYLE -->
 <style>

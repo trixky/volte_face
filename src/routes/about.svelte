@@ -25,8 +25,5 @@
     <p>ABOUT</p>
     <p>ABOUT</p>
 </main>
-<footer class="center">
-    <p>ceci est le footer</p>
-</footer>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STYLE -->

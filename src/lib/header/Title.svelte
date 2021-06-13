@@ -31,7 +31,7 @@
             title_shaking = true;
             module_title_never_shaked = false;
         };
-    }, 5000 + Math.random() * 10000);
+    }, 4000 + Math.random() * 4000);
 </script>
 
 <!-- ************************************** CONTENT -->

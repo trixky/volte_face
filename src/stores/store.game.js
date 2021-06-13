@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store';
-import { const_game } from '../constants/const.game';
+import { writable } from "svelte/store";
+import { const_game } from "../constants/const.game";
+import { store_settings } from "./store.settings"
 
 function get_initial_value() {
     return {
@@ -29,13 +30,25 @@ function get_initial_value() {
         //     [0, 0, 0, 0, 0, 0, 0, 0],
         // ]
 
-        turn: 2,
+        // turn: 2,
+        // pawns: [
+        //     [1, 1, 1, 0, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 0, 2, 1, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        // ]
+
+        turn: 1,
         pawns: [
-            [1, 1, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 2, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 2, 0, 0, 0],
+            [0, 0, 0, 2, 1, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],

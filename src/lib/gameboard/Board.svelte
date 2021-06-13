@@ -55,7 +55,7 @@
                 second_player_score}
             class:gamer-over-title-black={first_player_score >
                 second_player_score}
-            transition:fade={{ duration: 500 }}
+            transition:fade|local={{ duration: 500 }}
         >
             {@html gamer_over_title}
         </h2>
@@ -109,7 +109,7 @@
             </button>
         {/if}
         {#if button_description}
-            <p transition:fade={{ duration: 300 }}>
+            <p transition:fade|local={{ duration: 300 }}>
                 {@html button_description}
             </p>
         {/if}
