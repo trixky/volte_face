@@ -1,5 +1,6 @@
 export function next_board(board, player, x, y) {
     let new_player = player;
+    let board_changed = false;
 
     const new_board = [...board];
 
@@ -8,13 +9,13 @@ export function next_board(board, player, x, y) {
             for (let y_direction = -1; y_direction < 2; y_direction++) {
                 if (
                     (x_direction || y_direction) &&
-                    check_line(player, x, y, x_direction, y_direction, new_board, true))
+                    check_line(player, x, y, x_direction, y_direction, new_board, true)) {
                     new_player = player === 1 ? 2 : 1;
+                    board_changed = true;
+                }
             }
 
     let [first_player_is_blocked, second_player_is_blocked] = is_player_blocked(new_board)
-
-    console.log(first_player_is_blocked, second_player_is_blocked)
 
     if (first_player_is_blocked && second_player_is_blocked)
         new_player = 0;
@@ -23,7 +24,7 @@ export function next_board(board, player, x, y) {
     else if (new_player === 2 && second_player_is_blocked)
         new_player = 1;
 
-    return [new_board, new_player]
+    return [new_board, new_player, board_changed]
 }
 
 export function is_player_blocked(board) {

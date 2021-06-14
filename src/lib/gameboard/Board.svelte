@@ -1,24 +1,54 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
-    import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { fade } from "svelte/transition";
     import Case from "./Case.svelte";
     import { next_board } from "../../logic/next_board";
     import { store_game } from "../../stores/store.game";
-    import { bind } from "svelte/internal";
     import { get_score } from "../../logic/score";
+    import { store_settings } from "../../stores/store.settings";
+    import { const_game } from "../../constants/const.game";
+
+    let sound_move = null;
+    let sound_menu_selection = null;
+
+    onMount(() => {
+        sound_move = new Audio("/move.mp3");
+        sound_menu_selection = new Audio("/menu_selection.mp3");
+    });
+
+    function play_move_sound() {
+        if ($store_settings.sounds) {
+            setTimeout(() => {
+                const new_sound = sound_move.cloneNode(true);
+                new_sound.volume = $store_settings.volume / 100;
+                new_sound.play();
+            }, Math.random() * 50);
+        }
+        return true;
+    }
+
+    function play_menu_selection_sound(force_to_play = null) {
+        if (
+            ($store_settings.sounds || force_to_play === true) &&
+            force_to_play != false
+        ) {
+            const new_sound = sound_menu_selection.cloneNode(true);
+            new_sound.volume = $store_settings.volume / 100;
+            new_sound.play();
+        }
+        return true;
+    }
+
+
 
     let local_store_game;
-    let new_pawns;
-    let new_turn;
 
     let button_description = "";
 
-    $: console.log(button_description);
-
     function handleClickTrigger(x, y) {
         if (local_store_game.turn) {
-            [new_pawns, new_turn] = next_board(
+            const [new_pawns, new_turn, board_changed] = next_board(
                 local_store_game.pawns,
                 local_store_game.turn,
                 x,
@@ -26,6 +56,10 @@
             );
             store_game.update((n) => ({ ...n, pawns: new_pawns }));
             store_game.update((n) => ({ ...n, turn: new_turn }));
+
+            if (board_changed) {
+                play_move_sound();
+            }
         }
     }
 
@@ -60,7 +94,13 @@
             {@html gamer_over_title}
         </h2>
     {/if}
-    <div id="board" class:board-disabled={!local_store_game.turn}>
+    <div
+        id="board"
+        class:board-disabled={!local_store_game.turn}
+        class:theme-blue={$store_settings.theme === const_game.themes.blue}
+        class:theme-green={$store_settings.theme === const_game.themes.green}
+        class:theme-red={$store_settings.theme === const_game.themes.red}
+    >
         {#each local_store_game.pawns as line, y}
             <div class="board-line">
                 {#each line as value, x}
@@ -75,7 +115,7 @@
     </div>
     <div id="board-buttons-container">
         <button
-            on:click={store_game.restart}
+            on:click={() => play_menu_selection_sound() && store_game.restart()}
             on:mouseenter={() => (button_description = "restart the game")}
             on:mouseleave={() => (button_description = "")}
         >
@@ -88,6 +128,7 @@
         </button>
         {#if local_store_game.mode != 1}
             <button
+                on:click={play_menu_selection_sound}
                 on:mouseenter={() =>
                     (button_description = "human &nbsp;vs&nbsp; human")}
                 on:mouseleave={() => (button_description = "")}
@@ -101,6 +142,7 @@
             </button>
         {:else}
             <button
+                on:click={play_menu_selection_sound}
                 on:mouseenter={() =>
                     (button_description = "human &nbsp;vs&nbsp; bot")}
                 on:mouseleave={() => (button_description = "")}
@@ -126,11 +168,22 @@
         position: relative;
         display: inline-block;
         margin: 15px 0;
+        transition: opacity 2s;
 
         border: solid;
         border-width: 10px;
-        border-color: rgb(150, 247, 250);
-        transition: opacity 2s;
+    }
+
+    #board.theme-blue {
+        border-color: rgb(181, 244, 255);
+    }
+
+    #board.theme-green {
+        border-color: rgb(203, 255, 210);
+    }
+
+    #board.theme-red {
+        border-color: rgb(255, 202, 202);
     }
 
     .board-disabled {
@@ -166,7 +219,7 @@
     }
 
     #board-buttons-container > button {
-        background-color: #eee;
+        background-color: #e9e9e9;
         border: none;
         width: 55px;
         height: 55px;

@@ -1,11 +1,10 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 import { const_game } from "../constants/const.game";
 import { store_settings } from "./store.settings"
 
 function get_initial_value() {
     return {
         mode: const_game.mode.human,
-        // turn: 1,
         // pawns: [
         //     [0, 0, 0, 0, 0, 0, 0, 0],
         //     [0, 0, 0, 0, 2, 0, 0, 0],
@@ -17,8 +16,6 @@ function get_initial_value() {
         //     [0, 0, 0, 0, 0, 0, 0, 0],
         // ]
 
-
-        // turn: 2,
         // pawns: [
         //     [0, 0, 0, 0, 0, 0, 0, 0],
         //     [0, 0, 0, 0, 1, 0, 0, 0],
@@ -30,19 +27,7 @@ function get_initial_value() {
         //     [0, 0, 0, 0, 0, 0, 0, 0],
         // ]
 
-        // turn: 2,
-        // pawns: [
-        //     [1, 1, 1, 0, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        //     [0, 0, 2, 1, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        //     [0, 0, 0, 0, 0, 0, 0, 0],
-        // ]
-
-        turn: 1,
+        turn: get(store_settings).first_player_to_play,
         pawns: [
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],

@@ -37,7 +37,6 @@
     onDestroy(unsubscribe_store_game);
 
     $: [first_player_score, second_player_score] = get_score(local_store_game.pawns)
-    $: local_store_game.turn === 0 && console.log("c'eeeest morrrrt")
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -103,7 +102,7 @@
         height: calc(100% + 12px);
         width: calc(100% + 20px);
         z-index: -1;
-        background-color: #eee;
+        background-color: #e9e9e9;
 
         box-sizing: border-box;
         -moz-box-sizing: border-box;

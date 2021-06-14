@@ -13,6 +13,11 @@ export const const_game = {
         on: true,
         off: false,
     },
+    volume: {
+        min: 0,
+        max: 100,
+        default: 30,
+    },
     bot_difficulty: {
         easy: 1,
         medium: 2,

@@ -6,6 +6,7 @@ function get_initial_value() {
         first_player_to_play: const_game.players.first_player,
         theme: const_game.themes.blue,
         sounds: const_game.sounds.on,
+        volume: const_game.volume.default,
         bot_difficulty: const_game.bot_difficulty.medium,
     }
 }
@@ -21,7 +22,8 @@ function createGameStore() {
         update_theme: (v) => update(s => ({...s, theme: v})),
         update_sounds: (v) => update(s => ({...s, sounds: v})),
         update_bot_difficulty: (v) => update(s => ({...s, bot_difficulty: v})),
-        reset: () => set(get_initial_value())
+        reset: () => set(get_initial_value()),
+        set,
     };
 }
 
