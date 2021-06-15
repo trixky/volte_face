@@ -96,6 +96,7 @@
     {/if}
     <div
         id="board"
+    class:with-border={$store_settings.theme_border === const_game.themes_border.with_border}
         class:board-disabled={!local_store_game.turn}
         class:theme-blue={$store_settings.theme === const_game.themes.blue}
         class:theme-green={$store_settings.theme === const_game.themes.green}
@@ -169,7 +170,9 @@
         display: inline-block;
         margin: 15px 0;
         transition: opacity 2s;
+    }
 
+    #board.with-border {
         border: solid;
         border-width: 10px;
     }

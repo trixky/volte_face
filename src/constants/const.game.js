@@ -9,6 +9,10 @@ export const const_game = {
         blue: 2,
         red: 3,
     },
+    themes_border: {
+        without_border: false,
+        with_border: true,
+    },
     sounds: {
         on: true,
         off: false,

@@ -25,6 +25,7 @@
 
 <div
     class="board-case green-theme"
+    class:with-border={$store_settings.theme_border === const_game.themes_border.with_border}
     class:theme-blue={$store_settings.theme === const_game.themes.blue}
     class:theme-green={$store_settings.theme === const_game.themes.green}
     class:theme-red={$store_settings.theme === const_game.themes.red}
@@ -57,13 +58,19 @@
         background-color: rgb(181, 244, 255);
         border-color: rgb(0, 140, 255);
     }
+
     .board-case.theme-green {
         background-color: rgb(203, 255, 210);
         border-color: rgb(52, 194, 33);
     }
+
     .board-case.theme-red {
         background-color: rgb(255, 202, 202);
         border-color: rgb(255, 85, 85);
+    }
+
+    .board-case:not(.with-border) {
+        border-color: white
     }
 
     .board-case-border-top {

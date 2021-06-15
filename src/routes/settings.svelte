@@ -22,6 +22,10 @@
         }
         return true;
     }
+
+    console.log("-------------------");
+    console.log(const_game.themes_border.with_border);
+    console.log($store_settings.theme_border);
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -75,6 +79,22 @@
             id="option-red"
             class:option-selected={$store_settings.theme ===
                 const_game.themes.red}><p>red</p></button
+        >
+    </div>
+    <div class="options-line">
+        <button
+            on:click={() =>
+                play_menu_selection_sound() &&
+                store_settings.update_theme_border(const_game.themes_border.with_border)}
+            class:option-selected={$store_settings.theme_border ===
+                const_game.themes_border.with_border}><p>full</p></button
+        >
+        <button
+            on:click={() =>
+                play_menu_selection_sound() &&
+                store_settings.update_theme_border(const_game.themes_border.without_border)}
+            class:option-selected={$store_settings.theme_border ===
+                const_game.themes_border.without_border}><p>light</p></button
         >
     </div>
     <p>sounds</p>
@@ -140,7 +160,7 @@
 <style>
     .options-line > button {
         display: inline-block;
-        margin: 0 5px 10px 10px;
+        margin: 0 5px 15px 10px;
         padding: 0 15px;
         height: 55px;
         width: 90px;
