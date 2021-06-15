@@ -54,6 +54,7 @@
 <style>
     #title-container {
         padding: 10px 30px;
+        width: 320px;
         color: black;
         background-color: white;
         display: inline-block;
