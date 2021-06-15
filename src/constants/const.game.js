@@ -28,9 +28,7 @@ export const const_game = {
         hard: 3,
     },
     mode: {
-        human: 0,
-        bot_easy: 1,
-        bot_medium: 2,
-        bot_hard: 3,
-    }
+        human: true,
+        bot: false,
+    },
 }

@@ -22,10 +22,6 @@
         }
         return true;
     }
-
-    console.log("-------------------");
-    console.log(const_game.themes_border.with_border);
-    console.log($store_settings.theme_border);
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -42,7 +38,7 @@
                     const_game.players.first_player
                 )}
             class:option-selected={$store_settings.first_player_to_play ===
-                const_game.players.first_player}><p>white</p></button
+                const_game.players.first_player}><p>{$store_settings.mode === const_game.mode.human ? "white" : "player"}</p></button
         >
         <button
             on:click={() =>
@@ -51,7 +47,7 @@
                     const_game.players.second_player
                 )}
             class:option-selected={$store_settings.first_player_to_play ===
-                const_game.players.second_player}><p>black</p></button
+                const_game.players.second_player}><p>{$store_settings.mode === const_game.mode.human ? "black" : "bot"}</p></button
         >
     </div>
     <p>theme</p>

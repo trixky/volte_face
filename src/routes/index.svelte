@@ -2,7 +2,9 @@
 <script>
     import { quintOut } from "svelte/easing";
     import { crossfade } from "svelte/transition";
-    import { get_score } from "../logic/score"
+    import { get_score } from "../logic/score";
+    import { store_settings } from "../stores/store.settings";
+    import { const_game } from "../constants/const.game";
 
     const [send, receive] = crossfade({
         duration: (d) => Math.sqrt(d * 1000),
@@ -36,7 +38,9 @@
 
     onDestroy(unsubscribe_store_game);
 
-    $: [first_player_score, second_player_score] = get_score(local_store_game.pawns)
+    $: [first_player_score, second_player_score] = get_score(
+        local_store_game.pawns
+    );
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -53,7 +57,11 @@
                     out:send|local={{ key: "todo.id" }}
                 />
             {/if}
-            <p>player &nbsp;1&nbsp; (white)</p>
+            <p>
+                player {@html $store_settings.mode === const_game.mode.human
+                    ? "&nbsp;1"
+                    : ""}&nbsp; (white)
+            </p>
             <p>{first_player_score} &nbsp;pawns</p>
         </div>
         <div class="player-infos">
@@ -63,7 +71,11 @@
                     out:send|local={{ key: "todo.id" }}
                 />
             {/if}
-            <p>player &nbsp;2&nbsp; (black)</p>
+            <p>
+                {@html $store_settings.mode === const_game.mode.human
+                    ? "player &nbsp;2"
+                    : "bot "} &nbsp; (black)
+            </p>
             <p>{second_player_score} &nbsp;pawns</p>
         </div>
     </div>
@@ -80,6 +92,7 @@
         position: relative;
         display: inline-block;
         text-align: center;
+        width: 170px;
     }
 
     .player-infos > p {

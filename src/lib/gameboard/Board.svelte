@@ -1,16 +1,27 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
-    import { onDestroy, onMount } from "svelte";
+    import { afterUpdate, onDestroy, onMount } from "svelte";
     import { fade } from "svelte/transition";
     import Case from "./Case.svelte";
-    import { next_board } from "../../logic/next_board";
+    import { next_board, find_next_bot_move } from "../../logic/next_board";
     import { store_game } from "../../stores/store.game";
     import { get_score } from "../../logic/score";
     import { store_settings } from "../../stores/store.settings";
     import { const_game } from "../../constants/const.game";
 
+    let is_unmounted = false;
     let sound_move = null;
     let sound_menu_selection = null;
+    let board_is_intact = true;
+
+    afterUpdate(() => {
+        if (
+            board_is_intact &&
+            $store_settings.mode === const_game.mode.bot &&
+            $store_game.turn === const_game.players.second_player
+        )
+            bot_play();
+    });
 
     onMount(() => {
         sound_move = new Audio("/move.mp3");
@@ -40,27 +51,54 @@
         return true;
     }
 
-
-
     let local_store_game;
 
     let button_description = "";
 
-    function handleClickTrigger(x, y) {
-        if (local_store_game.turn) {
+    function bot_play() {
+        if (
+            $store_settings.mode === const_game.mode.bot &&
+            $store_game.turn === const_game.players.second_player
+        )
+            setTimeout(() => {
+                if (!is_unmounted) {
+                    const next_bot_move = find_next_bot_move(
+                        $store_game.pawns,
+                        $store_settings.bot_difficulty
+                    );
+                    handleClickTrigger(next_bot_move.x, next_bot_move.y, true);
+                }
+            }, 1234);
+    }
+
+    function handleClickTrigger(x, y, from_bot = false) {
+        if (
+            local_store_game.turn &&
+            ($store_settings.mode === const_game.mode.human ||
+                $store_game.turn === const_game.players.first_player ||
+                from_bot)
+        ) {
             const [new_pawns, new_turn, board_changed] = next_board(
                 local_store_game.pawns,
                 local_store_game.turn,
                 x,
                 y
             );
+            if (board_changed) {
+                play_move_sound();
+                board_is_intact = false;
+            }
+
             store_game.update((n) => ({ ...n, pawns: new_pawns }));
             store_game.update((n) => ({ ...n, turn: new_turn }));
 
-            if (board_changed) {
-                play_move_sound();
-            }
+            bot_play();
         }
+    }
+
+    function restart_game() {
+        store_game.restart();
+        board_is_intact = true;
     }
 
     const unsubscribe_store_game = store_game.subscribe((value) => {
@@ -77,7 +115,10 @@
             ? `player &nbsp;1&nbsp; (white)<br />win !<br /><br />${first_player_score} - ${second_player_score}`
             : `player &nbsp;2&nbsp; (black)<br />win !<br /><br />${second_player_score} - ${first_player_score}`;
 
-    onDestroy(unsubscribe_store_game);
+    onDestroy(() => {
+        is_unmounted = true;
+        unsubscribe_store_game();
+    });
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -96,7 +137,8 @@
     {/if}
     <div
         id="board"
-    class:with-border={$store_settings.theme_border === const_game.themes_border.with_border}
+        class:with-border={$store_settings.theme_border ===
+            const_game.themes_border.with_border}
         class:board-disabled={!local_store_game.turn}
         class:theme-blue={$store_settings.theme === const_game.themes.blue}
         class:theme-green={$store_settings.theme === const_game.themes.green}
@@ -116,41 +158,46 @@
     </div>
     <div id="board-buttons-container">
         <button
-            on:click={() => play_menu_selection_sound() && store_game.restart()}
+            on:click={() => play_menu_selection_sound() && restart_game()}
             on:mouseenter={() => (button_description = "restart the game")}
             on:mouseleave={() => (button_description = "")}
         >
             <img
-                id="refresh-icon"
-                src="/regresh.svg"
-                alt="refresh icon"
+                id="restart-icon"
+                src="/restart.svg"
+                alt="restart icon"
                 width="37px"
             />
         </button>
-        {#if local_store_game.mode != 1}
-            <button
-                on:click={play_menu_selection_sound}
-                on:mouseenter={() =>
-                    (button_description = "human &nbsp;vs&nbsp; human")}
-                on:mouseleave={() => (button_description = "")}
-            >
-                <img
-                    id="multiplayer-icon"
-                    src="/two_players.png"
-                    alt="multiplayer icon"
-                    width="37px"
-                />
-            </button>
-        {:else}
-            <button
-                on:click={play_menu_selection_sound}
-                on:mouseenter={() =>
-                    (button_description = "human &nbsp;vs&nbsp; bot")}
-                on:mouseleave={() => (button_description = "")}
-            >
-                <img id="bot-icon" src="/cpu.png" alt="bot icon" width="30px" />
-            </button>
-        {/if}
+        <button
+            on:click={() => {
+                play_menu_selection_sound();
+                if ($store_settings.mode === const_game.mode.human) {
+                    store_settings.update_mode(const_game.mode.bot);
+                    button_description = "human &nbsp;vs&nbsp; human";
+                } else {
+                    store_settings.update_mode(const_game.mode.human);
+                    button_description = "human &nbsp;vs&nbsp; bot";
+                }
+                restart_game();
+            }}
+            on:mouseenter={() =>
+                (button_description =
+                    $store_settings.mode === const_game.mode.human
+                        ? "human &nbsp;vs&nbsp; bot"
+                        : "human &nbsp;vs&nbsp; human")}
+            on:mouseleave={() => (button_description = "")}
+        >
+            <img
+                src={$store_settings.mode === const_game.mode.human
+                    ? "/cpu.png"
+                    : "/two_players.png"}
+                alt={$store_settings.mode === const_game.mode.human
+                    ? "bot icon"
+                    : "multiplayer icon"}
+                width="30px"
+            />
+        </button>
         {#if button_description}
             <p transition:fade|local={{ duration: 300 }}>
                 {@html button_description}

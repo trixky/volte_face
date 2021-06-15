@@ -10,7 +10,7 @@
 <main class="center">
     <ul class="reference-container">
         <li>
-            <p>built with</p>
+            <p>built on</p>
             <a href="https://svelte.dev/" target="_blank"
                 ><img
                     src="/static/svelte.png"
@@ -20,7 +20,7 @@
             >
         </li>
         <li>
-            <p>hosted from</p>
+            <p>hosted on</p>
             <a href="https://svelte.dev/" target="_blank"
                 ><img
                     src="/static/svelte.png"
