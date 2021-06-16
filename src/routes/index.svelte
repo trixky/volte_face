@@ -3,8 +3,13 @@
     import { quintOut } from "svelte/easing";
     import { crossfade } from "svelte/transition";
     import { get_score } from "../logic/score";
+    import { store_game } from "../stores/store.game";
     import { store_settings } from "../stores/store.settings";
     import { const_game } from "../constants/const.game";
+
+    import Header from "../lib/header/Header.svelte";
+    import Board from "../lib/gameboard/Board.svelte";
+
 
     const [send, receive] = crossfade({
         duration: (d) => Math.sqrt(d * 1000),
@@ -24,22 +29,8 @@
         },
     });
 
-    import { onDestroy } from "svelte";
-    import { store_game } from "../stores/store.game";
-
-    import Header from "../lib/header/Header.svelte";
-    import Board from "../lib/gameboard/Board.svelte";
-
-    let local_store_game;
-
-    const unsubscribe_store_game = store_game.subscribe((value) => {
-        local_store_game = value;
-    });
-
-    onDestroy(unsubscribe_store_game);
-
     $: [first_player_score, second_player_score] = get_score(
-        local_store_game.pawns
+        $store_game.pawns
     );
 </script>
 
@@ -51,7 +42,7 @@
 <main class="center">
     <div id="player-infos-container">
         <div class="player-infos">
-            {#if local_store_game.turn === 1}
+            {#if $store_game.turn === 1}
                 <div
                     in:receive|local={{ key: "todo.id" }}
                     out:send|local={{ key: "todo.id" }}
@@ -65,7 +56,7 @@
             <p>{first_player_score} &nbsp;pawns</p>
         </div>
         <div class="player-infos">
-            {#if local_store_game.turn === 2}
+            {#if $store_game.turn === 2}
                 <div
                     in:receive|local={{ key: "todo.id" }}
                     out:send|local={{ key: "todo.id" }}

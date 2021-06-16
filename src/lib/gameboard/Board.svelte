@@ -1,6 +1,6 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 <script>
-    import { afterUpdate, onDestroy, onMount } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
     import { fade } from "svelte/transition";
     import Case from "./Case.svelte";
     import { next_board, find_next_bot_move } from "../../logic/next_board";
@@ -51,8 +51,6 @@
         return true;
     }
 
-    let local_store_game;
-
     let button_description = "";
 
     function bot_play() {
@@ -73,14 +71,14 @@
 
     function handleClickTrigger(x, y, from_bot = false) {
         if (
-            local_store_game.turn &&
+            $store_game.turn &&
             ($store_settings.mode === const_game.mode.human ||
                 $store_game.turn === const_game.players.first_player ||
                 from_bot)
         ) {
             const [new_pawns, new_turn, board_changed] = next_board(
-                local_store_game.pawns,
-                local_store_game.turn,
+                $store_game.pawns,
+                $store_game.turn,
                 x,
                 y
             );
@@ -101,29 +99,19 @@
         board_is_intact = true;
     }
 
-    const unsubscribe_store_game = store_game.subscribe((value) => {
-        local_store_game = value;
-    });
+    $: [first_player_score, second_player_score] = get_score($store_game.pawns);
 
-    $: [first_player_score, second_player_score] = get_score(
-        local_store_game.pawns
-    );
     $: gamer_over_title =
         first_player_score === second_player_score
             ? `equality !<br/>${first_player_score} - ${second_player_score}`
             : first_player_score > second_player_score
             ? `player &nbsp;1&nbsp; (white)<br />win !<br /><br />${first_player_score} - ${second_player_score}`
             : `player &nbsp;2&nbsp; (black)<br />win !<br /><br />${second_player_score} - ${first_player_score}`;
-
-    onDestroy(() => {
-        is_unmounted = true;
-        unsubscribe_store_game();
-    });
 </script>
 
 <!-- ************************************** CONTENT -->
 <div id="board-container">
-    {#if !local_store_game.turn}
+    {#if !$store_game.turn}
         <h2
             id="gamer-over-title"
             class:gamer-over-title-white={first_player_score >
@@ -139,12 +127,12 @@
         id="board"
         class:with-border={$store_settings.theme_border ===
             const_game.themes_border.with_border}
-        class:board-disabled={!local_store_game.turn}
+        class:board-disabled={!$store_game.turn}
         class:theme-blue={$store_settings.theme === const_game.themes.blue}
         class:theme-green={$store_settings.theme === const_game.themes.green}
         class:theme-red={$store_settings.theme === const_game.themes.red}
     >
-        {#each local_store_game.pawns as line, y}
+        {#each $store_game.pawns as line, y}
             <div class="board-line">
                 {#each line as value, x}
                     <Case
