@@ -1,7 +1,7 @@
 <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ SCRIPT -->
 
 <script>
-    import { fade } from 'svelte/transition';
+    import { fade } from "svelte/transition";
     
     export let value = 1;
     export let rotation = false;

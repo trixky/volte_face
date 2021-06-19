@@ -10,6 +10,7 @@
     import { const_game } from "../../constants/const.game";
 
     let is_unmounted = false;
+    let settings_mounted = false;
     let sound_move = null;
     let sound_menu_selection = null;
     let board_is_intact = true;
@@ -26,6 +27,7 @@
     onMount(() => {
         sound_move = new Audio("/move.mp3");
         sound_menu_selection = new Audio("/menu_selection.mp3");
+        settings_mounted = true;
     });
 
     function play_move_sound() {
@@ -137,7 +139,7 @@
                 {#each line as value, x}
                     <Case
                         {value}
-                        clickTrigger={(_) => handleClickTrigger(x, y)}
+                        clickTrigger={() => handleClickTrigger(x, y)}
                         borders={[y != 0, x != 7, y != 7, x != 0]}
                     />
                 {/each}

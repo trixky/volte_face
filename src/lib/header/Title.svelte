@@ -6,31 +6,49 @@
 </script>
 
 <script>
+    import { onMount } from "svelte";
+    import { store_settings } from "../../stores/store.settings";
+
     let title_never_clicked = true;
     let block_animation = false;
     let title_shaking = false;
     let title_returned = module_title_returned;
     let title_returned_wait_block_animation = title_returned;
+
     $: module_title_returned = title_returned;
 
+    let sound_menu_selection = null;
+
+    onMount(() => (sound_menu_selection = new Audio("/menu_selection.mp3")));
+
+    function play_menu_selection_sound(force_to_play = null) {
+        if ($store_settings.sounds) {
+            const new_sound = sound_menu_selection.cloneNode(true);
+            new_sound.volume = $store_settings.volume / 100;
+            new_sound.play();
+        }
+        return true;
+    }
+
     function titleRotationHandler() {
+        play_menu_selection_sound();
         title_never_clicked = false;
         module_title_never_clicked = false;
         title_returned = !title_returned;
         block_animation = true;
-        setTimeout((_) => {
+        setTimeout(() => {
             block_animation = false;
-            setTimeout((_) => {
+            setTimeout(() => {
                 title_returned_wait_block_animation = title_returned;
             }, 100);
         }, null);
     }
 
-    setTimeout((_) => {
+    setTimeout(() => {
         if (module_title_never_shaked) {
             title_shaking = true;
             module_title_never_shaked = false;
-        };
+        }
     }, 4000 + Math.random() * 4000);
 </script>
 
@@ -67,7 +85,7 @@
     }
 
     #title-container.animation-shaking {
-        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
 
     #title-container.animation-to-not-returned {

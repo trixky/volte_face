@@ -21,10 +21,10 @@
         </li>
         <li>
             <p>hosted on</p>
-            <a href="https://svelte.dev/" target="_blank"
+            <a href="https://vercel.com/" target="_blank"
                 ><img
-                    src="/static/svelte.png"
-                    alt="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx logo"
+                    src="/static/vercel.png"
+                    alt="vercel logo"
                     width="200px"
                 /></a
             >

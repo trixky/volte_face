@@ -9,7 +9,15 @@
 
     import Header from "../lib/header/Header.svelte";
     import Board from "../lib/gameboard/Board.svelte";
+    import { onMount } from "svelte";
+    import { import_cookies } from "../logic/cookies";
 
+    let settings_mounted = false;
+
+    onMount(() => {
+        import_cookies();
+        settings_mounted = true;
+    });
 
     const [send, receive] = crossfade({
         duration: (d) => Math.sqrt(d * 1000),
@@ -29,9 +37,7 @@
         },
     });
 
-    $: [first_player_score, second_player_score] = get_score(
-        $store_game.pawns
-    );
+    $: [first_player_score, second_player_score] = get_score($store_game.pawns);
 </script>
 
 <!-- ************************************** CONTENT -->
@@ -70,7 +76,9 @@
             <p>{second_player_score} &nbsp;pawns</p>
         </div>
     </div>
-    <Board />
+    {#if settings_mounted}
+        <Board />
+    {/if}
 </main>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STYLE -->

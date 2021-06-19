@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
-import { const_game } from '../constants/const.game';
+import { writable } from "svelte/store";
+import { const_game } from "../constants/const.game";
 
 function get_initial_value() {
     return {
@@ -23,6 +23,7 @@ function createGameStore() {
         update_theme: (v) => update(s => ({...s, theme: v})),
         update_theme_border: (v) => update(s => ({...s, theme_border: v})),
         update_sounds: (v) => update(s => ({...s, sounds: v})),
+        update_volume: (v) => update(s => ({...s, volume: v})),
         update_mode: (v) => update(s => ({...s, mode: v})),
         update_bot_difficulty: (v) => update(s => ({...s, bot_difficulty: v})),
         reset: () => set(get_initial_value()),
