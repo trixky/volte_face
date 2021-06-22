@@ -1,6 +1,10 @@
 # volte_face
 
-An implementation of the volte-face game with [svelte](https://svelte.dev/). __(Vercel)__
+An web implementation of the volte-face game with [svelte](https://svelte.dev/). __(Vercel)__
+
+## Online
+
+This project is online thanks to the [vercel](https://vercel.com) service, so you can visit it by clicking [here](https://volte-face-mhtqk99tq-trixky.vercel.app/)!
 
 ![screenshot](https://raw.githubusercontent.com/trixky/volte_face/master/demo/screenshot.png)
 
@@ -18,10 +22,6 @@ An implementation of the volte-face game with [svelte](https://svelte.dev/). __(
 - Settings
 - Several themes
 - Sounds
-
-## Online
-
-This project is online thanks to the [vercel](https://vercel.com) service, so you can visit it by clicking [here](https://volte-face-mhtqk99tq-trixky.vercel.app/)!
 
 ## Usage
 
