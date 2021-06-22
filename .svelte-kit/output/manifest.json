@@ -1,0 +1,97 @@
+{
+  ".svelte-kit/build/runtime/internal/start.js": {
+    "file": "start-78666dcb.js",
+    "src": ".svelte-kit/build/runtime/internal/start.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js"
+    ],
+    "dynamicImports": [
+      ".svelte-kit/build/components/layout.svelte",
+      ".svelte-kit/build/components/error.svelte",
+      "src/routes/index.svelte",
+      "src/routes/settings.svelte",
+      "src/routes/about.svelte"
+    ],
+    "css": [
+      "assets/start-a8cd1609.css"
+    ]
+  },
+  ".svelte-kit/build/components/layout.svelte": {
+    "file": "layout.svelte-1f4844fd.js",
+    "src": ".svelte-kit/build/components/layout.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js"
+    ]
+  },
+  ".svelte-kit/build/components/error.svelte": {
+    "file": "error.svelte-5c716df4.js",
+    "src": ".svelte-kit/build/components/error.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js"
+    ]
+  },
+  "src/routes/index.svelte": {
+    "file": "pages/index.svelte-79e40a0b.js",
+    "src": "src/routes/index.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js",
+      "_Header-b182b7f8.js",
+      "_cookies-473cfc31.js"
+    ],
+    "css": [
+      "assets/pages/index.svelte-bcb26473.css"
+    ]
+  },
+  "src/routes/settings.svelte": {
+    "file": "pages/settings.svelte-17ed52c4.js",
+    "src": "src/routes/settings.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js",
+      "_Header-b182b7f8.js",
+      "_cookies-473cfc31.js"
+    ],
+    "css": [
+      "assets/pages/settings.svelte-1b04485a.css"
+    ]
+  },
+  "src/routes/about.svelte": {
+    "file": "pages/about.svelte-e8accbab.js",
+    "src": "src/routes/about.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-ac44e151.js",
+      "_Header-b182b7f8.js"
+    ],
+    "css": [
+      "assets/pages/about.svelte-b9811563.css"
+    ]
+  },
+  "_vendor-ac44e151.js": {
+    "file": "chunks/vendor-ac44e151.js"
+  },
+  "_Header-b182b7f8.js": {
+    "file": "chunks/Header-b182b7f8.js",
+    "imports": [
+      "_vendor-ac44e151.js"
+    ],
+    "css": [
+      "assets/Header-8c038b0c.css"
+    ]
+  },
+  "_cookies-473cfc31.js": {
+    "file": "chunks/cookies-473cfc31.js",
+    "imports": [
+      "_Header-b182b7f8.js"
+    ]
+  }
+}
