@@ -7,17 +7,17 @@ An implementation of the volte-face game with [svelte](https://svelte.dev/). __(
 ## Rules
 
 - The two players take turns placing a pawn on the board.
-- To place a pawn, it must capture at least one opposing pawn by encircling it
-- If a player cannot play, he skips his turn
-- If no player can play, the game ends
+- To place a pawn, it must capture at least one opposing pawn by encircling it.
+- If a player cannot play, he skips his turn.
+- If no player can play, the game ends.
 
 ## Features
 
-- human vs human
-- human vs bot (several levels of difficulty)
-- settings
-- several themes
-- sounds
+- Human vs human
+- Human vs bot (several levels of difficulty)
+- Settings
+- Several themes
+- Sounds
 
 ## Online
 
