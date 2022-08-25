@@ -6,7 +6,7 @@ An web implementation of the volte-face game with [svelte](https://svelte.dev/).
 
 This project is online thanks to the [vercel](https://vercel.com) service, so you can visit it by clicking [here](https://volte-face-mhtqk99tq-trixky.vercel.app/)!
 
-![screenshot](https://raw.githubusercontent.com/trixky/volte_face/master/demo/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/trixky/volte_face/master/.demo/screenshot.png)
 
 ## Rules
 
